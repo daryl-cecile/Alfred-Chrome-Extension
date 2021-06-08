@@ -4,9 +4,68 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Options</title>
+    <title>Alfred Options</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Alfred Options</h1>
+    
+    <main class="paper">
+
+        <h1>Alfred Options</h1>
+
+    
+        <div class="options">
+
+            <div class="group">
+                <div class="row">
+                    <div class="lane"><h3 style="text-align: center;">Cosmetics</h3></div>
+                </div>
+
+                <div class="row">
+                    <div class="lane"><p>Badge Visibility</p></div>
+                    <div class="lane">
+                        <input type="number" value="0" min="0" max="1" id="badge_visibility">
+                        <span>Set to 1 to show number of tabs being counted on badge</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="group">
+                <div class="row">
+                    <div class="lane"><h3 style="text-align: center;">Countdown</h3></div>
+                </div>
+    
+                <div class="row">
+                    <div class="lane"><p>Auto close timeout</p></div>
+                    <div class="lane">
+                        <input type="number" value="120" min="5" max="360" id="ttl">
+                        <span>Sets the amount of minutes to wait before auto closing tab</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="group">
+                <div class="row">
+                    <div class="lane"><h3 style="text-align: center;">Rules</h3></div>
+                </div>
+    
+                <div class="row">
+                    <div class="lane"><p>Ignore Patterns</p></div>
+                    <div class="lane">
+                        <textarea name="" rows="10" id="ignore_patterns"></textarea>
+                        <span>Wildcard patterns of sites to ignore. One per line</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <button id="save_btn">Save</button>
+            </div>
+
+        </div>
+
+    </main>
+
+    <script src="action.js"></script>
 </body>
 </html>

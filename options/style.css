@@ -1,0 +1,78 @@
+*{
+    box-sizing: border-box;
+}
+
+.paper {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 24px 12px;
+}
+
+.paper h1 {
+    font-size: 2.8em;
+}
+
+.paper .options{
+    display: flex;
+    flex-direction: column;
+}
+
+.paper .options .group{
+    padding: 8px;
+    border: 1px solid rgba(27,27,27,0.1);
+    border-radius: 2px;
+    margin-bottom: 32px;
+}
+
+.paper .options .row{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 8px;
+}
+
+/* .paper .options .row:nth-of-type(even){
+    background: rgba(27,27,27,0.05);
+} */
+
+.paper .options .row .lane:nth-of-type(1){
+    flex: 4;
+    text-align: right;
+    padding-right: 12px;
+    margin-bottom: auto;
+}
+
+.paper .options .row .lane:nth-of-type(1) p {
+    height: 28px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.paper .options .row .lane:nth-of-type(2){
+    flex: 8;
+    text-align: left;
+    flex-direction: column;
+}
+
+.paper .options .row .lane:nth-of-type(2) input,
+.paper .options .row .lane:nth-of-type(2) textarea{
+    width: 100%;
+    height: 28px;
+    display: block;
+    font-size: 1.2em;
+}
+
+.paper .options .row .lane:nth-of-type(2) textarea{
+    height: auto;
+    font-family: inherit;
+}
+
+.paper .options .row .lane:nth-of-type(2) span{
+    width: 100%;
+    text-align: right;
+    color: rgba(27,27,27,0.5);
+    display: block;
+    margin-top: 5px;
+}

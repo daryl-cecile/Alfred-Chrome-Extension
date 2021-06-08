@@ -34,6 +34,19 @@ main .row span:nth-of-type(2){
     margin-left: 4px;
 }
 
+main .row:not(#status-row) span:nth-of-type(1){
+    color: rgb(0, 130, 216);
+}
+
+main .row:not(#status-row).inactive span{
+    opacity: 0.5;
+}
+
+main .row:not(#status-row).killed{
+    opacity: 0.5;
+    pointer-events: none;
+}
+
 main #status-row{
     position: fixed;
     top: 12px;
@@ -43,7 +56,8 @@ main #status-row{
 }
 
 main #status-row.status_watching{
-    background: rgb(191, 255, 186);
+    background: rgb(1, 83, 116);
+    color:whitesmoke;
 }
 
 main #tabs{
@@ -51,6 +65,27 @@ main #tabs{
     flex-direction: column;
     overflow-y: auto;
     min-height: 100px;
-    background-color: pink;
+    background-color: rgb(192, 230, 255);
     flex: 1;
+    position: relative;
+}
+
+main #tabs:empty::after{
+    content: 'Nothing to watch';
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    inset: 0;
+    color: rgb(88, 188, 255);
+    font-size: 2em;
+}
+
+/* buttons */
+main button{
+    border: 1px solid;
+    border-radius: 3px;
+    border-color: inherit;
+    color: inherit;
+    background: inherit;
 }

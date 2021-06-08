@@ -1,0 +1,14 @@
+{
+    "name": "Alfred",
+    "description": "Keep your tab game under control",
+    "version": "1.0",
+    "manifest_version": 3,
+    "background": {
+        "service_worker": "background.js"
+    },
+    "permissions": ["storage", "activeTab", "scripting", "declarativeContent", "tabs", "activeTab", "alarms"],
+    "options_page": "options/index.html",
+    "action": {
+        "default_popup": "popup/index.html"
+    }
+}

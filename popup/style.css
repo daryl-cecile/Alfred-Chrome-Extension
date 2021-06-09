@@ -6,11 +6,11 @@ body{
 main{
     display: flex;
     flex-direction: column;
-    padding: 12px;
+    padding: 0;
     min-width: 500px;
     max-height: 700px;
     box-sizing: border-box;
-    padding-top: 60px;
+    padding-top: 48px;
 }
 
 main .row{
@@ -18,7 +18,7 @@ main .row{
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding: 8px;
+    padding: 8px 16px;
 }
 
 main .row:nth-of-type(even){
@@ -49,14 +49,14 @@ main .row:not(#status-row).killed{
 
 main #status-row{
     position: fixed;
-    top: 12px;
-    left: 12px;
-    right: 12px;
-    border-bottom: 12px solid white;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 32px;
 }
 
 main #status-row.status_watching{
-    background: rgb(1, 83, 116);
+    background: #263238;
     color:whitesmoke;
 }
 
@@ -65,7 +65,7 @@ main #tabs{
     flex-direction: column;
     overflow-y: auto;
     min-height: 100px;
-    background-color: rgb(192, 230, 255);
+    background-color: #fafafa;
     flex: 1;
     position: relative;
 }

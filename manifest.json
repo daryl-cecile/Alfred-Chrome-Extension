@@ -9,6 +9,12 @@
     "permissions": ["storage", "activeTab", "scripting", "declarativeContent", "tabs", "activeTab", "alarms"],
     "options_page": "options/index.html",
     "action": {
-        "default_popup": "popup/index.html"
+        "default_popup": "popup/index.html",
+        "default_icon": {
+            "128": "images/albert_icon.png"
+       }
+    },
+    "icons": {
+        "128": "images/albert_icon.png"
     }
 }

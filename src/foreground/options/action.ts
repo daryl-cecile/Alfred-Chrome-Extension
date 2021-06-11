@@ -1,30 +1,19 @@
-async function sendRequest(actionName, ...params){
-    return new Promise(resolve => {
-        chrome.runtime.sendMessage({action: `alfred:${actionName}`, params}, resolve);
-    });
-}
+import { getStore, setStore } from "../helpers";
 
-async function getStore(){
-    return sendRequest("getStore");
-}
-
-async function setStore(content){
-    return sendRequest("replaceStoreContent", content);
-}
 
 document.addEventListener('DOMContentLoaded', async function () {
 
     let storage = await getStore();
 
-    const badgeVisibilityEl = document.querySelector("#badge_visibility");
-    const ttlEl = document.querySelector("#ttl");
-    const ignorePatternEl = document.querySelector("#ignore_patterns");
+    const badgeVisibilityEl = document.querySelector<HTMLInputElement>("#badge_visibility");
+    const ttlEl = document.querySelector<HTMLInputElement>("#ttl");
+    const ignorePatternEl = document.querySelector<HTMLTextAreaElement>("#ignore_patterns");
 
     badgeVisibilityEl.value = storage.badge.visible ? '1' : '0';
-    ttlEl.value = (storage.ttl.ms ?? 120_000) / 1000 / 60;
+    ttlEl.value = ((storage.ttl.ms ?? 120_000) / 1000 / 60).toString();
     ignorePatternEl.value = storage.cleanupRules.ignorePatterns.join("\n");
 
-    let btn = document.querySelector("#save_btn");
+    let btn = document.querySelector<HTMLButtonElement>("#save_btn");
     
     btn.addEventListener("click", async ev => {
         btn.style.opacity = "0.2";

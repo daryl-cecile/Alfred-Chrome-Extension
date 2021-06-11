@@ -1,0 +1,1 @@
+./node_modules/.bin/esbuild ./src/background.ts --bundle --watch --platform=browser --outfile=./src/background.js

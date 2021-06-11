@@ -1,56 +1,7 @@
 
-/*  ----- COMMUNICATION ----- */ 
-
-async function sendRequest(actionName, ...params){
-    return new Promise(resolve => {
-        chrome.runtime.sendMessage({action: `alfred:${actionName}`, params}, resolve);
-    });
-}
-
-async function getTabCollectionInformation(){
-    return sendRequest("getTabCollectionInformation");
-}
-
-async function getAlfredStatus(){
-    return sendRequest("getAlfredStatus");
-}
-
-async function setAlfredStatus(isWaiting){
-    return sendRequest("setAlfredStatus", isWaiting);
-}
-
-async function setTabImmunity(isImmune, tabId){
-    return sendRequest("setTabImmunity", isImmune, tabId);
-}
-
-/*  ----- END: COMMUNICATION ----- */ 
-
-
-/*  ----- UTILITIES ----- */ 
-
-function uiUpdateStatus(isWatching){
-    let statusElement = document.querySelector("#status-row");
-    statusElement.classList[isWatching ? "add" : "remove"]('status_watching');
-    statusElement.querySelector("span").innerHTML = `Status: ${isWatching ? "Counting down" : "stopped"}`;
-    statusElement.querySelector("button").innerHTML = isWatching ? 'Stop' : 'Start';
-}
-
-function msToTime(s) {
-    function pad(n) {
-      return ('00' + n).slice(-2);
-    }
-  
-    var ms = s % 1000;
-    s = (s - ms) / 1000;
-    var secs = s % 60;
-    s = (s - secs) / 60;
-    var mins = s % 60;
-    var hrs = (s - mins) / 60;
-  
-    return pad(hrs) + ':' + pad(mins) + ':' + pad(secs);
-  }
-
-/*  ----- END: UTILITIES ----- */ 
+/*  ----- UTILITIES ----- */
+import { uiUpdateStatus, msToTime } from "../../Utils";
+import { getAlfredStatus, setAlfredStatus, getTabCollectionInformation, setTabImmunity } from "../helpers";
 
 
 document.addEventListener('DOMContentLoaded', async function () {
@@ -67,7 +18,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         uiUpdateStatus(!isWatching);
     });
 
-    let {tabs} = await getTabCollectionInformation();
+    let { tabs } = await getTabCollectionInformation();
 
     let namedCount = {}; // count of tabs with similar names
        

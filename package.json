@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "@types/chrome": "^0.0.145",
+    "esbuild": "^0.11.18"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": ". package_build.sh",
+    "dev": ". package_dev.sh"
+  }
+}

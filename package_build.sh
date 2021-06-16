@@ -11,3 +11,5 @@ find src/foreground/options -type f -not -name "*.ts" -exec cp {} extension/ui/o
 cp src/manifest.json extension/
 cp LICENSE extension/
 cp images/albert_icon.png extension/images/
+
+zip -r deployment.zip extension/ -x "*.DS_Store"

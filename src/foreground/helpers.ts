@@ -1,4 +1,4 @@
-import { TabInfo, UserPreferences } from "../custom";
+import { ArchivedTab, TabInfo, UserPreferences } from "../custom";
 
 export async function sendRequest<T = any>(actionName:string, ...params:Array<any>){
     return new Promise<T>(resolve => {
@@ -18,6 +18,10 @@ export async function getTabCollectionInformation(){
     return sendRequest<{tabs: TabInfo[]}>("getTabCollectionInformation");
 }
 
+export async function getArchivedTabCollectionInformation(){
+    return sendRequest<{archivedTabs: ArchivedTab[]}>("getArchivedTabCollectionInformation");
+}
+
 export async function getAlfredStatus(){
     return sendRequest<{isWatching: boolean}>("getAlfredStatus");
 }
@@ -28,4 +32,8 @@ export async function setAlfredStatus(isWaiting:boolean){
 
 export async function setTabImmunity(isImmune:boolean, tabId:string|number){
     return sendRequest("setTabImmunity", isImmune, tabId);
+}
+
+export async function reviveTab(tabId:string|number){
+    return sendRequest<{newTab:chrome.tabs.Tab}>("reviveTab", tabId);
 }

@@ -1,6 +1,6 @@
-import { AppVariables, UserPreferences } from "../../custom";
+import { AppVariables, ArchivedTab, UserPreferences } from "../../custom";
 import { Store } from "./Store";
-import { convertPatternToRegex } from "../../Utils";
+import { cloneObj, convertPatternToRegex } from "../../Utils";
 
 export function getEligibleTabs(){
     return new Promise<chrome.tabs.Tab[]>(resolve => {
@@ -16,6 +16,35 @@ export function getEligibleTabs(){
     });
 }
 
+export function getArchivedTabs(){
+    return new Promise<ArchivedTab[]>(resolve => {
+        Store.AppVariable("status", status => {
+            resolve(status.closedTabs);
+        });
+    });
+}
+
+export async function restoreArchivedTab(tabId:number):Promise<{newTab:chrome.tabs.Tab}>{
+    let status = await Store.readAppVariable("status");
+    let tabIndex = status.closedTabs.findIndex(t => t.id === tabId);
+    if (tabIndex === -1) return;
+    let tab = status.closedTabs[tabIndex];
+
+    let newTab = await chrome.tabs.create({
+        active: false,
+        windowId: tab.windowId,
+        url: tab.url,
+        openerTabId: tab.openerTabId,
+        index: tab.index,
+        pinned: tab.pinned ?? false
+    });
+
+    status.closedTabs.splice(tabIndex, 1);
+    await Store.setAllAppVariables({status});
+
+    return {newTab};
+}
+
 export function setBadge(tabCount:number, isWatching:boolean, badgeVisible:boolean){
     let badgeText = '';
     if (tabCount > 0) badgeText = tabCount.toString();
@@ -25,6 +54,30 @@ export function setBadge(tabCount:number, isWatching:boolean, badgeVisible:boole
     chrome.action.setBadgeText({
         text: badgeText
     });
+}
+
+export async function archiveTab(tabId:number) {
+    let status = await Store.readAppVariable("status");
+
+    if (!status.isWatching) return;
+
+    console.log('deleting', tabId);
+    
+    let tab = await chrome.tabs.get(tabId);
+
+    status.closedTabs.push({
+        ...cloneObj(tab),
+        closeTimestamp: Date.now()
+    });
+
+    await Store.setAllAppVariables({ status });
+
+    console.log('archived', status.closedTabs);
+
+    chrome.tabs.remove(tabId);
+    removeTabMonitor(tabId.toString());
+
+    verifyTabRegister();
 }
 
 export async function verifyTabRegister(){
@@ -70,7 +123,8 @@ export async function setup(){
             pollMs: 1000 * 60 * 1,
             ...appVars.status,
             tabMonitors: {},
-            tabImmunity: []
+            tabImmunity: [],
+            closedTabs: []
         }
     };
 

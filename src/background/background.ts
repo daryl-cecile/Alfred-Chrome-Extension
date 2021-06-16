@@ -1,6 +1,7 @@
 
 import { TabInfo } from "../custom";
-import { getEligibleTabs, removeTabMonitor, startup, verifyTabRegister } from "./common/BackgroundHelpers";
+import { cloneObj } from "../Utils";
+import { archiveTab, getArchivedTabs, getEligibleTabs, removeTabMonitor, restoreArchivedTab, startup, verifyTabRegister } from "./common/BackgroundHelpers";
 import { Store } from "./common/Store";
 
 chrome.runtime.onInstalled.addListener(() => {
@@ -25,15 +26,8 @@ chrome.alarms.onAlarm.addListener(alarmInfo => {
             break;
         }
         default: {
-            Store.AppVariable("status", status => {
-                if (!status.isWatching) return status;
-                let tabId = Number(alarmName);
-                console.log('deleting', tabId);
-                chrome.tabs.remove(tabId);
-                removeTabMonitor(tabId.toString());
-
-                verifyTabRegister();
-            })
+            let tabId = Number(alarmName);
+            archiveTab(tabId);
         }
     }
 });
@@ -59,6 +53,25 @@ chrome.runtime.onMessage.addListener((request, _, sendResponse) => {
                         })
                     });
                 });
+            });
+            break;
+        }
+
+        case "alfred:getArchivedTabCollectionInformation":{
+            verifyTabRegister();
+            getArchivedTabs().then(tabs => {
+                sendResponse({
+                    archivedTabs: tabs.sort((a,b)=> a.closeTimestamp - b.closeTimestamp)
+                });
+            });
+            break;
+        }
+
+        case "alfred:reviveTab":{
+            let tabId = Number("" + request.params[0]);
+            restoreArchivedTab(tabId).then(()=>{
+                verifyTabRegister();
+                sendResponse({});
             });
             break;
         }

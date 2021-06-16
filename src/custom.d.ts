@@ -14,7 +14,8 @@ export type AppVariables = {
         tabMonitors: {
             [tabId:string]: number
         },
-        tabImmunity: Array<string>
+        tabImmunity: Array<string>,
+        closedTabs: Array<ArchivedTab>
     }
 }
 
@@ -34,4 +35,8 @@ export type TabInfo = chrome.tabs.Tab & {
     TTL: number,
     Deadline: number,
     isImmune: boolean
+}
+
+export type ArchivedTab = chrome.tabs.Tab & {
+    closeTimestamp: number
 }

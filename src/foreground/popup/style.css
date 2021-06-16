@@ -1,3 +1,8 @@
+:root{
+    --main-color: #8336ff;
+    --pause-color: #fcb675;
+}
+
 body{
     margin: 0;
     padding: 0;
@@ -21,24 +26,27 @@ main .row{
     padding: 8px 16px;
 }
 
-main .row:nth-of-type(even){
-    background: rgba(27,27,27,0.1);
-}
-
 main .row span:nth-of-type(1){
     min-width: 56px;
 }
 
-main .row span:nth-of-type(2){
+main .row span:nth-of-type(2),
+main .row span:only-of-type{
     flex: 1;
     margin-left: 4px;
 }
 
-main .row:not(#status-row) span:nth-of-type(1){
-    color: rgb(0, 130, 216);
+main .row img{
+    width: 2em;
+    margin-right: 4px;
 }
 
-main .row:not(#status-row).inactive span{
+main .row:not(#status-row) span:nth-of-type(1){
+    color: var(--main-color);
+}
+
+main .row:not(#status-row).inactive span,
+main .row:not(#status-row).inactive img{
     opacity: 0.5;
 }
 
@@ -53,11 +61,25 @@ main #status-row{
     left: 0;
     right: 0;
     height: 32px;
+    margin-bottom: 4px;
+    background-color: var(--pause-color);
+    padding: 8px 8px 8px 16px;
 }
 
 main #status-row.status_watching{
-    background: #263238;
+    background: var(--main-color);
     color:whitesmoke;
+}
+
+main #status-row.status_watching button{
+    background: white;
+    color: var(--main-color);
+}
+
+main #status-row:not(.status_watching) button{
+    background: #ff9800;
+    color: white;
+    border-color: #ff9800;
 }
 
 main #tabs{
@@ -68,6 +90,7 @@ main #tabs{
     background-color: #fafafa;
     flex: 1;
     position: relative;
+    margin-top: 4px;
 }
 
 main #tabs:empty::after{
@@ -77,8 +100,16 @@ main #tabs:empty::after{
     align-items: center;
     justify-content: center;
     inset: 0;
-    color: rgb(88, 188, 255);
+    color: var(--main-color);
     font-size: 2em;
+}
+
+main #tabs .row{
+    padding: 8px 8px;
+    margin: 0 4px 4px;
+    border: 1px solid gray;
+    border-radius: 3px;
+    position: relative;
 }
 
 /* buttons */
@@ -88,4 +119,34 @@ main button{
     border-color: inherit;
     color: inherit;
     background: inherit;
+    padding: 8px 20px;
+}
+
+main #tabs .row button{
+    padding: 2px;
+    border: none;
+    border-radius: 3px;
+    background: transparent;
+    display: flex;
+}
+
+main #tabs .row button svg{
+    width: 1.4em;
+    color: gray;
+}
+
+main #tabs .row button:hover svg{
+    /* background: rgba(131, 54, 255, 0.1) */
+    color: var(--main-color);
+}
+
+main #tabs .row::after{
+    content: '';
+    background-color: var(--process-color, var(--main-color));
+    width: var(--process-percent , 0);
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    position: absolute;
+    transition: all .3s;
 }

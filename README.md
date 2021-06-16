@@ -19,3 +19,4 @@ Running `npm install` and then `npm run build` will build the files and copy all
 | 09 June 2021 | User tested in Chrome and Brave browsers                                                           |
 | 11 June 2021 | I've gone through the code to convert it to typescript to make maintenance and future work easier. |
 | 11 June 2021 | Removed unused permission |
+| 14 June 2021 | Updated colors and button icons, added new closed tabs list, and zipper step |
